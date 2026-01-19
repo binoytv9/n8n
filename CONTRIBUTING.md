@@ -170,12 +170,31 @@ checked out and set up:
    pnpm build
    ```
 
+
+### Troubleshooting
+
+#### SQLite Architecture Mismatch (macOS Apple Silicon)
+If you encounter an error related to `sqlite3` having an incompatible architecture (e.g., `mach-o file, but is an incompatible architecture (have 'arm64', need 'x86_64')`) when starting the application, it means the binary was built for the wrong architecture relative to your Node.js process.
+
+To fix this, rebuild `sqlite3` for x64:
+
+```bash
+npm_config_target_arch=x64 pnpm rebuild sqlite3
+```
+
 ### Start
 
 To start n8n execute:
 
 ```
 pnpm start
+```
+
+#### Running with Environment Variables (.env)
+If you need to load environment variables from a `.env` file (e.g., for webhook configuration), you can run:
+
+```bash
+export $(cat .env | xargs) && pnpm start
 ```
 
 ## Development cycle
